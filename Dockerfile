@@ -23,9 +23,8 @@ RUN docker-php-ext-install \
 # Copy cron file to the cron.d directory with proper execution rights on the cron job.
 ADD ./docker/cron /etc/cron.d/cron
 
-# Keep composer version 1 until drupal-console-extend-plugin has not been updated.
-# @see https://github.com/hechoendrupal/drupal-console-extend-plugin/pull/25
-RUN composer self-update --1
+# Update/Ensure Composer v2 is used.
+RUN composer self-update --2
 
 # Add the composer files to install dependencies before copying (optimization).
 ADD ./composer.json ./composer.lock ./

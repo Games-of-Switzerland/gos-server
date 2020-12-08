@@ -30,10 +30,8 @@
     "require": {
         "php": ">=7.3.0",
         "ext-exif": "*",
-        "cweagans/composer-patches": "^1.6.5",
         "drupal/admin_toolbar": "^2.0",
         "drupal/bamboo_twig": "^4.1",
-        "drupal/console": "^1.0.2",
         "drupal/consumer_image_styles": "^3.0",
         "drupal/core-recommended": "^8.8",
         "drupal/elasticsearch_helper": "6.x-dev",
@@ -59,13 +57,15 @@
         "sebastian/phpcpd": "^4.0",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3",
-        "zaporylie/composer-drupal-optimizations": "^1.0"
+        "webmozart/path-util": "^2.3"
     },
     "require-dev": {
         "alexandresalome/mailcatcher": "^1.2",
         "behat/behat": "^3.5",
         "behatch/contexts": "^3.2",
+        "composer/installers": "^1.9",
+        "cweagans/composer-patches": "^1.7",
+        "drupal/console": "^1.9.7",
         "drupal/core-dev": "^8.8",
         "drupal/default_content": "^1.0@alpha",
         "drupal/drupal-extension": "^4.0",

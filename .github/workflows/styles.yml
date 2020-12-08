@@ -11,7 +11,7 @@ jobs:
         with:
           php-version: '7.4'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1, cs2pr
+          tools: composer:v2, cs2pr
       - uses: actions/checkout@master
       - run: composer install --prefer-dist
       - run: ./vendor/bin/phpcs --report=checkstyle | cs2pr
@@ -25,7 +25,7 @@ jobs:
         with:
           php-version: '7.4'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1
+          tools: composer:v2
       - uses: actions/checkout@master
       - run: composer install --prefer-dist
       - run: ./vendor/bin/phpmd ./web/modules/custom text ./phpmd.xml --suffixes php,module,inc,install,test,profile,theme,css,info,txt --exclude *Test.php
@@ -40,7 +40,7 @@ jobs:
         with:
           php-version: '7.4'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1
+          tools: composer:v2
       - uses: actions/checkout@master
       - run: composer install --prefer-dist
       - run: ./vendor/bin/phpcpd ./web/modules/custom --names=*.php,*.module,*.inc,*.install,*.test,*.profile,*.theme,*.css,*.info,*.txt --names-exclude=*.md,*.info.yml --ansi --exclude=tests
@@ -55,7 +55,7 @@ jobs:
         with:
           php-version: '7.4'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1, php-cs-fixer, cs2pr
+          tools: composer:v2, php-cs-fixer, cs2pr
       - uses: actions/checkout@master
       - run: composer install --prefer-dist
       - run: ./vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
@@ -69,7 +69,7 @@ jobs:
         with:
           php-version: '7.4'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1, phpstan, cs2pr
+          tools: composer:v2, phpstan, cs2pr
       - uses: actions/checkout@master
       - run: composer install --prefer-dist
       - run: ./vendor/bin/phpstan analyse ./web/modules/custom ./behat ./web/themes --error-format=checkstyle | cs2pr
@@ -83,7 +83,7 @@ jobs:
         with:
           php-version: '7.4'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1
+          tools: composer:v2
       - uses: actions/checkout@master
       - run: composer install --prefer-dist
       - run: ./vendor/bin/psalm --output-format=github
