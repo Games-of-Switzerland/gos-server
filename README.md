@@ -4,7 +4,6 @@ Swiss Games Garden API project is based on 💦 [Drupal](https://drupal.org/), �
 It uses 🐳 [Docker](http://docker.com/) for running, 🥃 [Gin](https://github.com/EasyCorp/EasyAdminBundle) as Admin UI, 📝 [Swagger](https://swagger.io/) for documentation and ✅ [PHPUnit](https://phpunit.de/)/[Behat](https://docs.behat.org) for testing.
 We deploy with 🚀 [Capistrano](https://github.com/capistrano/capistrano).
 
-
 | Build Status | Swagger | Issues | Activity |
 |:-------------------:|:----------------:|:----------------:|:----------------:|
 | [![Build Status](https://travis-ci.com/Games-of-Switzerland/gos-server.svg?branch=dev)](https://travis-ci.com/Games-of-Switzerland/gos-server) | [![Swagger](https://img.shields.io/badge/documentation-swagger-blue)](https://api.swissgames.garden/swagger) | ![GitHub issues](https://img.shields.io/github/issues/Games-of-Switzerland/gos-server?style=flat-square) | ![GitHub last commit](https://img.shields.io/github/last-commit/Games-of-Switzerland/gos-server?style=flat-square) |
@@ -122,81 +121,16 @@ $settings['gos_elasticsearch.index_prefix'] = 'local';
     docker-compose exec app docker-as-drupal --help
 
 ## 🚔 Check Drupal coding standards & Drupal best practices
-
-You need to run composer before using PHPCS. The Drupal and DrupalPractice Standard will automatically be applied following the rules on phpcs.xml.dist` file
-
-### Command Line Usage
-
-Check Drupal coding standards & Drupal best practices:
-
-```bash
-./vendor/bin/phpcs
-```
-
-Automatically fix coding standards
-
-```bash
-./vendor/bin/phpcbf
-```
-
-Checks compatibility with PHP interpreter versions
-
-```bash
-./vendor/bin/phpcf --target 7.3 \
---file-extensions php,module,inc,install,test,profile,theme,info \
-./web/modules/custom
-
-./vendor/bin/phpcf --target 7.3 --file-extensions php ./behat
-```
-
-### Improve global code quality using PHPCPD (Code duplication) &  PHPMD (PHP Mess Detector).
-
-Detect overcomplicated expressions & Unused parameters, methods, properties
-
-```bash
-./vendor/bin/phpmd ./web/modules/custom text ./phpmd.xml \
---suffixes php,module,inc,install,test,profile,theme,css,info,txt --exclude *Test.php
-
-./vendor/bin/phpmd ./behat text ./phpmd.xml --suffixes php
-```
-
-Copy/Paste Detector
-
-```bash
-./vendor/bin/phpcpd ./web/modules/custom \
---names=*.php,*.module,*.inc,*.install,*.test,*.profile,*.theme,*.css,*.info,*.txt --names-exclude=*.md,*.info.yml \
---ansi --exclude=tests
-
-./vendor/bin/phpcpd ./behat --names=*.php --ansi
-```
-
-### Ensure PHP Community Best Practicies using PHP Coding Standards Fixer
-
-It can modernize your code (like converting the pow function to the ** operator on PHP 5.6) and (micro) optimize it.
-
-```bash
-./vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle
-```
-
-### Attempts to dig into your program and find as many type-related bugs as possiblevia Psalm
-
-```bash
-./vendor/bin/psalm
-```
-
-### Catches whole classes of bugs even before you write tests using PHPStan
-
-```bash
-./vendor/bin/phpstan analyse ./web/modules/custom ./behat ./web/themes --error-format=checkstyle
-```
-
-### Enforce code standards with git hooks
-
 Maintaining code quality by adding the custom post-commit hook to yours.
 
 ```bash
-cat ./scripts/hooks/post-commit >> ./.git/hooks/post-commit
+cat ./bin/hooks/post-commit >> ../.git/hooks/post-commit
 ```
+
+These checks are automatically run in [our CI](../.github/workflows/styles.yml).
+You can read more about it in our [CONTRIBUTING section](./CONTRIBUTING.md).
+
+
 
 ## After a git pull/merge
 
@@ -287,74 +221,6 @@ Check that Elasticsearch is up and running.
 ```bash
 docker-compose exec elasticsearch curl http://127.0.0.1:9200/_cat/health
 ```
-
-### List all games
-
-```bash
-docker-compose exec elasticsearch curl -X GET "http://127.0.0.1:9200/gos_node_game/_search?pretty"
-```
-
-docker-compose exec elasticsearch curl -X GET "http://127.0.0.1:9200/gos_node_game/_search?pretty&explain" -H 'Content-Type: application/json' -d'
-{
-    "query" : {
-        "match_phrase" : {
-            "releases.platform": {
-                "query": "ps4",
-                "analyzer": "search_synonyms"
-            }
-        }
-    }
-}
-'
-
-docker-compose exec elasticsearch curl -X GET "http://127.0.0.1:9200/gos_node_game/_search?pretty&explain" -H 'Content-Type: application/json' -d'
-{
-    "query" : {
-        "nested": {
-            "path" : "releases",
-            "query": {
-              "query_string": {
-                "default_field": "releases.platform",
-                "query": "ps4"
-              }
-            }
-        }
-    }
-}
-'
-
-docker-compose exec elasticsearch curl -X GET "http://127.0.0.1:9200/gos_node_game/_search?pretty&explain" -H 'Content-Type: application/json' -d'
-{
-    "query" : {
-      "query_string": {
-        "default_field": "title",
-        "query": "kill"
-      }
-    }
-}
-'
-
-docker-compose exec elasticsearch curl -X GET "http://127.0.0.1:9200/gos_node_game/_search?pretty&explain" -H 'Content-Type: application/json' -d'
-{
-    "query" : {
-      "query_string": {
-        "default_field": "desc",
-        "query": "memories"
-      }
-    }
-}
-'
-
-docker-compose exec elasticsearch curl -X GET "http://127.0.0.1:9200/gos_node_studio/_search?pretty&explain" -H 'Content-Type: application/json' -d'
-{
-    "query" : {
-      "query_string": {
-        "default_field": "name",
-        "query": "softvar"
-      }
-    }
-}
-'
 
 ## 📋 Documentations
 

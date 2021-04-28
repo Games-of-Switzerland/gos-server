@@ -10,7 +10,6 @@
 
   <exclude-pattern>*\.(md|info\.yml)$</exclude-pattern>>
 
-
   <rule ref="./vendor/drupal/coder/coder_sniffer/Drupal"/>
   <rule ref="./vendor/drupal/coder/coder_sniffer/DrupalPractice"/>
 

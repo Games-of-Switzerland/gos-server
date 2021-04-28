@@ -38,7 +38,7 @@ class GamesSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function generateImages(ImportEvent $event) {
+  public function generateImages(ImportEvent $event): void {
     /** @var \Drupal\node\NodeStorageInterface $node_storage */
     $node_storage = $this->entityTypeManager->getStorage('node');
 
@@ -53,7 +53,7 @@ class GamesSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       DefaultContentEvents::IMPORT => [
         ['generateImages', 1000],

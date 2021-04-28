@@ -24,12 +24,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1
-      - uses: actions/checkout@master
+          tools: composer:v1, phpmd
+      - name: Checkout
+        uses: actions/checkout@v2
       - run: composer install --prefer-dist
-      - run: ./vendor/bin/phpmd ./web/modules/custom text ./phpmd.xml --suffixes php,module,inc,install,test,profile,theme,css,info,txt --exclude *Test.php
-      - run: ./vendor/bin/phpmd ./behat text ./phpmd.xml --suffixes php
+      - run: phpmd ./web/modules/custom text ./phpmd.xml --suffixes php,module,inc,install,test,profile,theme,css,info,txt --exclude *Test.php,*vendor/*
+      - run: phpmd ./behat text ./phpmd.xml -suffixes php
 
 #  phpcpd:
 #    name: phpcpd
@@ -82,8 +82,35 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-          tools: composer:v1
-      - uses: actions/checkout@master
+          tools: composer:v1, psalm
+      - name: Checkout
+        uses: actions/checkout@v2
       - run: composer install --prefer-dist
-      - run: ./vendor/bin/psalm --output-format=github
+      - run: psalm --config=psalm.xml --no-cache --output-format=github
+
+  phpdd:
+    name: phpdd
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker-compose -f docker-compose.yml pull --include-deps app
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+      - name: Build the docker-compose stack
+        run: docker-compose -f docker-compose.yml build app
+      - name: Run phpdd
+        run: docker-compose run app phpdd ./web/modules/custom ./behat --file-extensions php,inc,test --exclude vendor
+
+  drupal-check:
+    name: drupal-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
+          tools: composer:v1, cs2pr
+      - uses: actions/checkout@master
+      - run: composer install --no-progress --prefer-dist
+      - run: ./vendor/bin/drupal-check -dvvv ./web/modules/custom ./behat --no-progress --format=checkstyle | cs2pr

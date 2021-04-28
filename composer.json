@@ -74,12 +74,9 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "imbo/behat-api-extension": "^2.2",
         "marcortola/behat-seo-contexts": "^2.1",
+        "mglaman/drupal-check": "^1.1",
         "mglaman/phpstan-drupal": "^0.12.3",
-        "phpmd/phpmd": "^2.6",
-        "phpstan/phpstan-deprecation-rules": "^0.12.2",
-        "sebastian/phpcpd": "^4.0",
-        "vimeo/psalm": "^3.13.1",
-        "wapmorgan/php-code-fixer": "^2.0"
+        "phpstan/phpstan-deprecation-rules": "^0.12.2"
     },
     "conflict": {
         "drupal/drupal": "*"

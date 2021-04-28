@@ -45,3 +45,58 @@ RUN set -eux; \
   \
   composer install --prefer-dist --no-progress --no-suggest --no-interaction; \
   composer clear-cache;
+
+# Register the Drupal and DrupalPractice Standard with PHPCS.
+RUN ./vendor/bin/phpcs --config-set installed_paths \
+    `pwd`/vendor/drupal/coder/coder_sniffer
+
+# Copy the Analyzer definition files installed from Composer.
+COPY phpcs.xml.dist phpstan.neon .php_cs.dist ./
+
+# Setup, Download & install PHP CS Fixer.
+# COPY .php_cs.dist.dist .php_cs.dist ./
+# RUN set -eux; \
+  # curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer; \
+  # chmod a+x php-cs-fixer; \
+  # mv php-cs-fixer /usr/bin/php-cs-fixer;
+
+# Setup, Download & install PHPMD.
+COPY phpmd.xml ./
+RUN set -eux; \
+  curl -LJO https://phpmd.org/static/latest/phpmd.phar; \
+  chmod +x phpmd.phar; \
+  mv phpmd.phar /usr/bin/phpmd
+
+# Setup, Download & install PHPCPD.
+RUN set -eux; \
+  curl -LJO https://phar.phpunit.de/phpcpd.phar; \
+  chmod +x phpcpd.phar; \
+  mv phpcpd.phar /usr/bin/phpcpd
+
+# Setup, Download & install PHPStan.
+# COPY phpstan.neon ./
+# RUN set -eux; \
+  # curl -LJO https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar; \
+  # chmod +x phpstan.phar; \
+  # mv phpstan.phar /usr/bin/phpstan
+
+# Setup, Download & install Psalm.
+COPY psalm.xml ./
+RUN set -eux; \
+  curl -LJO https://github.com/vimeo/psalm/releases/latest/download/psalm.phar; \
+  chmod +x psalm.phar; \
+  mv psalm.phar /usr/bin/psalm
+
+# Setup, Download & install PHPDD (PhpDeprecationDetector).
+ RUN set -eux; \
+   \
+   apt-get update; \
+   apt-get install -y \
+    libbz2-dev \
+   ; \
+   \
+   docker-php-ext-install bz2; \
+   \
+   curl -LJO https://github.com/wapmorgan/PhpDeprecationDetector/releases/latest/download/phpdd-2.0.25.phar; \
+   chmod +x phpdd-2.0.25.phar; \
+   mv phpdd-2.0.25.phar /usr/bin/phpdd

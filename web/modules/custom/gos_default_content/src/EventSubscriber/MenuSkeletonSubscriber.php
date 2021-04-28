@@ -15,7 +15,7 @@ class MenuSkeletonSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       DefaultContentEvents::IMPORT => [
         ['setupMainMenu', 1000],
@@ -31,7 +31,7 @@ class MenuSkeletonSubscriber implements EventSubscriberInterface {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function setupMainMenu(ImportEvent $event) {
+  public function setupMainMenu(ImportEvent $event): void {
     $items = [
       [
         'title' => 'Contact',

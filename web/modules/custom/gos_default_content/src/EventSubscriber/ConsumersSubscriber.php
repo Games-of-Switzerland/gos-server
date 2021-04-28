@@ -31,7 +31,7 @@ class ConsumersSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       DefaultContentEvents::IMPORT => [
         ['updateDefault', 1000],
@@ -49,7 +49,7 @@ class ConsumersSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function updateDefault(ImportEvent $event) {
+  public function updateDefault(ImportEvent $event): void {
     $styles = $this->entityTypeManager->getStorage('image_style')->loadMultiple();
     /** @var \Drupal\consumers\Entity\Consumer|null $consumer */
     $consumer = $this->entityTypeManager->getStorage('consumer')->load(1);

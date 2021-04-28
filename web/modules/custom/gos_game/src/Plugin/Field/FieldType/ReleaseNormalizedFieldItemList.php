@@ -18,7 +18,7 @@ class ReleaseNormalizedFieldItemList extends FieldItemList {
    * @psalm-suppress PropertyTypeCoercion
    * @psalm-suppress ArgumentTypeCoercion
    */
-  protected function computeValue() {
+  protected function computeValue(): void {
     $entity = $this->getEntity();
 
     $normalized_releases = ReleasesCompiler::normalizeReleases($entity);

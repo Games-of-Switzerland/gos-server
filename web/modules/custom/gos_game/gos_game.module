@@ -16,7 +16,7 @@ use Drupal\gos_game\ReleasesCompiler;
 /**
  * Implements hook_ENTITY_TYPE_presave().
  */
-function gos_game_node_presave(EntityInterface $entity) {
+function gos_game_node_presave(EntityInterface $entity): void {
   if ($entity->bundle() === 'game') {
     /** @var \Drupal\node\NodeInterface $game */
     $game = $entity;
