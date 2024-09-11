@@ -135,9 +135,9 @@ class GameNormalizer extends ContentEntityNormalizer {
         }
 
         $people[] = [
-          'path' => $member->entity->toUrl('canonical')->toString(),
-          'fullname' => $member->entity->title->value,
-          'uuid' => $member->entity->get('uuid')->value,
+          'path' => $member->entity?->toUrl('canonical')->toString(),
+          'fullname' => $member->entity?->title->value,
+          'uuid' => $member->entity?->get('uuid')->value,
         ];
       }
     }
@@ -148,19 +148,19 @@ class GameNormalizer extends ContentEntityNormalizer {
 
       foreach ($object->field_studios as $studio) {
         $studios[] = [
-          'path' => $studio->entity->toUrl('canonical')->toString(),
-          'name' => $studio->entity->title->value,
-          'uuid' => $studio->entity->get('uuid')->value,
+          'path' => $studio->entity?->toUrl('canonical')->toString(),
+          'name' => $studio->entity?->title->value,
+          'uuid' => $studio->entity?->get('uuid')->value,
         ];
 
         // Handle people on studio fullnames.
-        if (!$studio->entity->get('field_members')
+        if (!$studio->entity?->get('field_members')
           ->isEmpty()) {
           foreach ($object->field_members as $member) {
             $people[] = [
-              'path' => $member->entity->toUrl('canonical')->toString(),
-              'fullname' => $member->entity->title->value,
-              'uuid' => $member->entity->get('uuid')->value,
+              'path' => $member->entity?->toUrl('canonical')->toString(),
+              'fullname' => $member->entity?->title->value,
+              'uuid' => $member->entity?->get('uuid')->value,
             ];
           }
         }
@@ -178,8 +178,8 @@ class GameNormalizer extends ContentEntityNormalizer {
 
       foreach ($object->field_genres as $genre) {
         $genres[] = [
-          'name' => $genre->entity->get('name')->value,
-          'slug' => $genre->entity->get('field_slug')->value,
+          'name' => $genre->entity?->get('name')->value,
+          'slug' => $genre->entity?->get('field_slug')->value,
         ];
       }
 
@@ -206,8 +206,8 @@ class GameNormalizer extends ContentEntityNormalizer {
 
       foreach ($object->field_locations as $location) {
         $locations[] = [
-          'name' => $location->entity->get('name')->value,
-          'slug' => $location->entity->get('field_slug')->value,
+          'name' => $location->entity?->get('name')->value,
+          'slug' => $location->entity?->get('field_slug')->value,
         ];
       }
 
@@ -220,8 +220,8 @@ class GameNormalizer extends ContentEntityNormalizer {
 
       foreach ($object->field_cantons as $canton) {
         $cantons[] = [
-          'name' => $canton->entity->get('name')->value,
-          'slug' => $canton->entity->get('field_slug')->value,
+          'name' => $canton->entity?->get('name')->value,
+          'slug' => $canton->entity?->get('field_slug')->value,
         ];
       }
 
