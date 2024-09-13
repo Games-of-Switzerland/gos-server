@@ -120,6 +120,19 @@ class ElasticGamesResource extends ElasticResourceBase {
     $index = $this->elasticsearchPluginManager->createInstance(self::ELASTICSEARCH_PLUGIN_ID);
     $es_query = $this->buildBaseGamesElasticsearchQuery($index, $resource_validator);
 
+    // When no parameters (excepted pager) have been submitted,
+    // then the order must be random.
+    // This is intended to be used on Homepage only.
+    if ($resource_validator->getRaw() === ['page' => '0']) {
+      $es_query['body']['sort'] = [
+        '_script' => [
+          'script' => 'Math.random()',
+          'type' => 'number',
+          'order' => 'asc',
+        ],
+      ];
+    }
+
     // Add the sort property.
     if (!empty($resource_validator->getSort())) {
       $es_query['body']['sort'] = $this->addSort($resource_validator->getSort());

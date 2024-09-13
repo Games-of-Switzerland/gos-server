@@ -106,6 +106,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - remove caches on both Search & Autocomplete endpoints (Elasticsearch)
 
+### Added
+- add true random search when no parameters (excepted pager )are given on search - Games-of-Switzerland/swissgamesgarden#127
+
 ## [0.6.0] - 2024-02-09
 ### Changed
 - move Linters php-deprecation-detector, php-cs-fixer & psalm into own Tools/ComposerJson
