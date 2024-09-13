@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Security
 - update imbo/behat-api-extension (v2.3.3 => v5.0.0)
+- upgrade drupal/metatag (1.26.0 => 2.0.2)
 
 ## [1.2.0] - 2024-09-11
 ### Added
